@@ -1,13 +1,20 @@
 
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, Button, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 const Profile = () => {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Profile</Text>
+        <TouchableOpacity onPress={() => router.push('/(tabs)/profile/settings')}>
+            <Ionicons name="settings-outline" size={24} color="#333" />
+        </TouchableOpacity>
+      </View>
       <View style={styles.profileHeader}>
         <Image
           source={{ uri: 'https://via.placeholder.com/150' }} // Replace with actual profile picture
@@ -16,19 +23,25 @@ const Profile = () => {
         <Text style={styles.name}>John Doe</Text> // Replace with actual name
         <Text style={styles.location}>New York, USA</Text> // Replace with actual location
       </View>
-      <View style={styles.section}>
+
+      <View style={styles.infoSection}>
         <Text style={styles.sectionTitle}>Contact Information</Text>
-        <Text>Email: john.doe@example.com</Text> // Replace with actual email
-        <Text>Phone: +1 123 456 7890</Text> // Replace with actual phone number
+        <View style={styles.infoRow}>
+          <Ionicons name="mail-outline" size={20} color="#555" />
+          <Text style={styles.infoText}>john.doe@example.com</Text>
+        </View>
+        <View style={styles.infoRow}>
+          <Ionicons name="call-outline" size={20} color="#555" />
+          <Text style={styles.infoText}>+1 123 456 7890</Text>
+        </View>
       </View>
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Recent Activity</Text>
-        {/* Add recent activity components here */}
-      </View>
-      <Button
-        title="Edit Profile"
-        onPress={() => router.push('/profile/edit')}
-      />
+
+      <TouchableOpacity style={styles.button} onPress={() => router.push('/(tabs)/profile/edit')}>
+        <Text style={styles.buttonText}>Edit Profile</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.button, styles.logoutButton]} onPress={() => router.push('/auth/login')}>
+        <Text style={[styles.buttonText, styles.logoutButtonText]}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -36,34 +49,77 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#fff',
     padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
   },
   profileHeader: {
     alignItems: 'center',
-    marginBottom: 16,
+    padding: 24,
+    backgroundColor: '#fff',
   },
   profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 8,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 12,
   },
   name: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
   },
   location: {
-    fontSize: 16,
+    fontSize: 18,
     color: 'gray',
   },
-  section: {
-    marginBottom: 16,
+  infoSection: {
+    padding: 24,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 16,
   },
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  infoText: {
+    fontSize: 16,
+    marginLeft: 12,
+  },
+  button: {
+    backgroundColor: '#2c6e49',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginHorizontal: 24,
+    marginBottom: 12,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  logoutButton: {
+    backgroundColor: '#d9534f',
+  },
+  logoutButtonText: {
+    color: '#fff',
+  }
 });
 
 export default Profile;
